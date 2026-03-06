@@ -13,6 +13,7 @@ export function WelcomeScreen() {
     const { register } = useChallengeContext();
     const navigate = useNavigate();
 
+    const [isRegistering, setIsRegistering] = useState(false);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
@@ -21,9 +22,28 @@ export function WelcomeScreen() {
     const handleSubmit = useCallback((e) => {
         e.preventDefault();
         if (!name.trim() || !email.trim() || !phone.trim()) return;
-        register(name.trim(), email.trim(), phone.trim());
-        navigate('/dashboard', { replace: true });
+
+        setIsRegistering(true);
+
+        // Simulate a calming delay for the preparation screen
+        setTimeout(() => {
+            register(name.trim(), email.trim(), phone.trim());
+            navigate('/dashboard', { replace: true });
+        }, 2500);
     }, [name, email, phone, register, navigate]);
+
+    if (isRegistering) {
+        return (
+            <div className="welcome-bg">
+                <FloatingParticles count={20} />
+                <div className="welcome-content loading-content">
+                    <div className="lotus-icon">🪷</div>
+                    <h2 className="loading-title fade-in delay-1">Preparing your journey...</h2>
+                    <p className="loading-subtitle fade-in delay-2">Taking a deep breath</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="welcome-bg">

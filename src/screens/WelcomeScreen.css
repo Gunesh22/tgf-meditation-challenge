@@ -203,3 +203,36 @@
         font-size: 2.5rem;
     }
 }
+
+/* Loading State */
+.loading-content {
+    justify-content: center;
+    min-height: 50vh;
+}
+
+.loading-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-top: 24px;
+    font-weight: 400;
+}
+
+.loading-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+    animation: breathing 3s ease-in-out infinite;
+}
+
+@keyframes breathing {
+
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}

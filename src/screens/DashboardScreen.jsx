@@ -1,7 +1,7 @@
 // ===== DashboardScreen =====
 // Main screen — composes all dashboard components and manages modal + day selection state.
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useChallengeContext } from '../context/ChallengeContext';
 
@@ -35,6 +35,11 @@ export function DashboardScreen() {
 
     // Selected day — defaults to currentDay
     const [selectedDay, setSelectedDay] = useState(currentDay);
+
+    // Sync selected day if the actual current challenge day rolls over
+    useEffect(() => {
+        setSelectedDay(currentDay);
+    }, [currentDay]);
 
     // Modal state
     const [showReflection, setShowReflection] = useState(false);
