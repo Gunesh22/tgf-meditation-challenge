@@ -5,7 +5,13 @@ import { SESSION_TIMES } from '../../constants';
 import './LiveSessions.css';
 
 export function LiveSessions() {
-    const hour = new Date().getHours();
+    // Get the current hour specifically in Indian Standard Time (IST)
+    const istHourStr = new Date().toLocaleString('en-US', {
+        timeZone: 'Asia/Kolkata',
+        hour: 'numeric',
+        hour12: false
+    });
+    const hour = parseInt(istHourStr, 10) % 24;
 
     return (
         <section className="live-section">

@@ -26,9 +26,11 @@ export const WISDOMS = [
 ];
 
 export const SESSION_TIMES = [
-    { time: '9 AM', label: 'Morning', hourStart: 5, hourEnd: 12 },
-    { time: '2 PM', label: 'Afternoon', hourStart: 12, hourEnd: 17 },
-    { time: '9 PM', label: 'Evening', hourStart: 17, hourEnd: 24 },
+    { time: '7:00 AM', label: 'IST', hourStart: 5, hourEnd: 12 },
+    { time: '2:30 PM', label: 'IST', hourStart: 12, hourEnd: 18 },
+    { time: '8:00 PM', label: 'IST', hourStart: 18, hourEnd: 21 },
+    { time: '10:00 PM', label: 'IST', hourStart: 21, hourEnd: 24 },
+    { time: '2:30 AM', label: 'IST', hourStart: 0, hourEnd: 5 },
 ];
 
 export const INITIAL_STATE = {
