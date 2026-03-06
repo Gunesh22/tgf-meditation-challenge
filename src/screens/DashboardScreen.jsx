@@ -36,6 +36,11 @@ export function DashboardScreen() {
     // Selected day — defaults to currentDay
     const [selectedDay, setSelectedDay] = useState(currentDay);
 
+    // Ensure page starts at the top when navigating from WelcomeScreen
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     // Sync selected day if the actual current challenge day rolls over
     useEffect(() => {
         setSelectedDay(currentDay);
