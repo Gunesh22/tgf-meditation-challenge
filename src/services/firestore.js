@@ -87,10 +87,10 @@ export async function completeDay(phone, dateISO, feeling, thought) {
 
     await withRetry(async () => {
         const docRef = doc(db, PARTICIPANTS, docId);
-        await updateDoc(docRef, {
-            [`completedDays.${dateISO}`]: true,
-            [`reflections.${dateISO}`]: { feeling, thought },
-        });
+        await setDoc(docRef, {
+            completedDays: { [dateISO]: true },
+            reflections: { [dateISO]: { feeling, thought } },
+        }, { merge: true });
     });
 }
 
