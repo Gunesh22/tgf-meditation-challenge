@@ -81,7 +81,7 @@ export function DashboardScreen() {
             {/* Header */}
             <header className="dash-header">
                 <div className="header-left">
-                    <span className="greeting-hello">Namaste</span>
+                    <span className="greeting-hello">Happy Thoughts</span>
                     <h2 className="greeting-name">{state.name} 🌿</h2>
                 </div>
                 <div className="day-badge">
