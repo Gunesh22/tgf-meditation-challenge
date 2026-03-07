@@ -39,6 +39,7 @@ export function useChallenge() {
     const currentDay = useMemo(() => getCurrentDay(state.startDate), [state.startDate]);
     const completedCount = useMemo(() => Object.keys(state.completedDays).length, [state.completedDays]);
     const isChallengeComplete = completedCount >= TOTAL_DAYS;
+    const isChallengeFailed = currentDay > TOTAL_DAYS && !isChallengeComplete;
 
     // --- Persist to localStorage ---
     const persist = useCallback((nextState) => {
@@ -124,6 +125,7 @@ export function useChallenge() {
         currentDay: Math.min(currentDay, TOTAL_DAYS),
         completedCount,
         isChallengeComplete,
+        isChallengeFailed,
         register,
         completeDay,
         resetChallenge,

@@ -48,3 +48,22 @@
 .btn-view-cert:active {
     transform: scale(0.97);
 }
+
+/* Failed banner styles */
+.failed-card {
+    background: linear-gradient(160deg, rgba(239, 83, 80, 0.05), rgba(0, 0, 0, 0.3));
+    border: 1px solid rgba(239, 83, 80, 0.1);
+}
+
+.failed-icon {
+    font-size: 40px;
+    opacity: 0.8;
+}
+
+.failed-card h3 {
+    color: var(--text-primary);
+}
+
+.failed-card p {
+    color: var(--text-muted);
+}

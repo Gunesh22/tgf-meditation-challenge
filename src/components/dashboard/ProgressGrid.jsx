@@ -3,17 +3,18 @@
 
 import { useChallengeContext } from '../../context/ChallengeContext';
 import { TOTAL_DAYS } from '../../constants';
+import { t } from '../../utils/translations';
 import './ProgressGrid.css';
 
 export function ProgressGrid({ selectedDay, onDaySelect }) {
-    const { completedCount, isDayCompleted } = useChallengeContext();
+    const { completedCount, isDayCompleted, language } = useChallengeContext();
 
     const days = Array.from({ length: TOTAL_DAYS }, (_, i) => i + 1);
 
     return (
         <section className="progress-section">
             <div className="section-header">
-                <h3>Your 11-Day Journey</h3>
+                <h3>{t(language, 'yourJourney')}</h3>
                 <span className="progress-counter">{completedCount} / {TOTAL_DAYS}</span>
             </div>
 
@@ -32,9 +33,9 @@ export function ProgressGrid({ selectedDay, onDaySelect }) {
                             className={className}
                             onClick={() => onDaySelect(d)}
                             type="button"
-                            aria-label={`Day ${d}${completed ? ' - Completed' : ''}${isSelected ? ' - Selected' : ''}`}
+                            aria-label={isSelected ? t(language, 'daySelected', { day: d }) : (completed ? t(language, 'dayCompleted', { day: d }) : t(language, 'day', { day: d }))}
                         >
-                            <span className="progress-day__num">Day {d}</span>
+                            <span className="progress-day__num">{t(language, 'day')} {d}</span>
                             <span className="progress-day__icon">{completed ? '✔' : '○'}</span>
                         </button>
                     );

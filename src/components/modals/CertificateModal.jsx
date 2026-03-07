@@ -7,10 +7,11 @@ import { Modal } from '../ui/Modal';
 import { Button } from '../ui/Button';
 import { formatDate } from '../../utils/dateHelpers';
 import { toBlob } from 'html-to-image';
+import { t } from '../../utils/translations';
 import './CertificateModal.css';
 
 export function CertificateModal({ isOpen, onClose }) {
-    const { state } = useChallengeContext();
+    const { state, language } = useChallengeContext();
     const certRef = useRef(null);
     const [isSharing, setIsSharing] = useState(false);
 
@@ -18,7 +19,7 @@ export function CertificateModal({ isOpen, onClose }) {
         if (!certRef.current || isSharing) return;
 
         setIsSharing(true);
-        const text = `🪷 I completed the Tej Gyan Foundation 11-Day Meditation Challenge!`;
+        const text = t(language, 'certShareText');
 
         try {
             // Generate PNG Blob from the DOM
@@ -53,14 +54,14 @@ export function CertificateModal({ isOpen, onClose }) {
                 // Copy text as a bonus
                 try {
                     await navigator.clipboard.writeText(text);
-                    alert('Image downloaded! Text copied to clipboard.');
+                    alert(t(language, 'certDownloaded'));
                 } catch {
-                    alert('Image downloaded successfully!');
+                    alert(t(language, 'certDownloadedNoText'));
                 }
             }
         } catch (error) {
             console.error('Failed to share certificate:', error);
-            alert('Sorry, there was an error generating your certificate.');
+            alert(t(language, 'certError'));
         } finally {
             setIsSharing(false);
         }
@@ -72,27 +73,26 @@ export function CertificateModal({ isOpen, onClose }) {
                 <div className="cert-border">
                     <div className="cert-content">
                         <div className="cert-lotus">🪷</div>
-                        <p className="cert-pre">Certificate of Completion</p>
-                        <h2 className="cert-title">11-Day Meditation Challenge</h2>
+                        <p className="cert-pre">{t(language, 'certCompletion')}</p>
+                        <h2 className="cert-title">{t(language, 'certTitle')}</h2>
                         <div className="cert-divider" />
-                        <p className="cert-awarded">Awarded to</p>
-                        <h3 className="cert-name">{state.name || 'Meditator'}</h3>
+                        <p className="cert-awarded">{t(language, 'certAwardedTo')}</p>
+                        <h3 className="cert-name">{state.name || t(language, 'certDefaultName')}</h3>
                         <p className="cert-body">
-                            For successfully completing 11 consecutive days of mindful meditation
-                            practice as part of the Tej Gyan Foundation Meditation Challenge.
+                            {t(language, 'certBodyText')}
                         </p>
                         <div className="cert-divider" />
                         <p className="cert-date">{formatDate(new Date())}</p>
-                        <p className="cert-org">Tej Gyan Foundation</p>
+                        <p className="cert-org">{t(language, 'certOrg')}</p>
                     </div>
                 </div>
             </div>
             <div className="cert-actions">
                 <Button variant="primary" onClick={handleShare}>
-                    {isSharing ? 'Generating...' : 'Share Certificate'}
+                    {isSharing ? t(language, 'certGeneratingBtn') : t(language, 'certShareBtn')}
                 </Button>
                 <Button variant="secondary" onClick={onClose}>
-                    Close
+                    {t(language, 'certCloseBtn')}
                 </Button>
             </div>
         </Modal>

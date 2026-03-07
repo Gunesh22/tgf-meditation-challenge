@@ -2,31 +2,38 @@
 // Main action card. Shows the selected day's status and "I Meditated" button.
 
 import { useChallengeContext } from '../../context/ChallengeContext';
+import { t } from '../../utils/translations';
 import './TodayCard.css';
 
 export function TodayCard({ selectedDay, onMeditateClick }) {
-    const { isDayCompleted, isChallengeComplete } = useChallengeContext();
+    const { isDayCompleted, isChallengeComplete, isChallengeFailed, language } = useChallengeContext();
 
     const dayCompleted = isDayCompleted(selectedDay);
 
     let heading, subtext, btnText, btnIcon, btnClass;
 
     if (isChallengeComplete) {
-        heading = "You've completed the challenge! 🎉";
-        subtext = "All 11 days of mindful practice. Beautiful.";
-        btnText = "Challenge Complete";
+        heading = t(language, 'challengeCompleteHeading');
+        subtext = t(language, 'challengeCompleteSub');
+        btnText = t(language, 'challengeCompleteBtn');
         btnIcon = "🏆";
         btnClass = "btn-meditate completed";
+    } else if (isChallengeFailed) {
+        heading = t(language, 'challengeFailedHeading');
+        subtext = t(language, 'challengeFailedSub');
+        btnText = t(language, 'challengeFailedBtn');
+        btnIcon = "🍂";
+        btnClass = "btn-meditate completed";
     } else if (dayCompleted) {
-        heading = `Day ${selectedDay} — Practice complete ✨`;
-        subtext = "This day is done. Select another day or rest.";
-        btnText = "Already Completed";
+        heading = t(language, 'dayCompleteHeading', { day: selectedDay });
+        subtext = t(language, 'dayCompleteSub');
+        btnText = t(language, 'alreadyCompletedBtn');
         btnIcon = "✓";
         btnClass = "btn-meditate completed";
     } else {
-        heading = `Day ${selectedDay} — Ready to meditate`;
-        subtext = "Take a moment. Close your eyes. Begin.";
-        btnText = "I Meditated Today";
+        heading = t(language, 'dayReadyHeading', { day: selectedDay });
+        subtext = t(language, 'readySub');
+        btnText = t(language, 'iMeditatedBtn');
         btnIcon = "✦";
         btnClass = "btn-meditate";
     }
@@ -36,7 +43,7 @@ export function TodayCard({ selectedDay, onMeditateClick }) {
             <div className="today-card">
                 <div className="today-card__inner">
                     <div className="today-card__status">
-                        <div className={`breath-circle ${dayCompleted || isChallengeComplete ? 'breath-circle--still' : ''}`}>
+                        <div className={`breath-circle ${dayCompleted || isChallengeComplete || isChallengeFailed ? 'breath-circle--still' : ''}`}>
                             <div className="breath-circle__inner">
                                 <span className="breath-circle__icon">🧘</span>
                             </div>

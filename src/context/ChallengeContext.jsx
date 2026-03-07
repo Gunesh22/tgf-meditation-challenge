@@ -1,7 +1,7 @@
 // ===== ChallengeContext =====
 // Provides challenge state and actions to the entire component tree.
 
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useState, useCallback } from 'react';
 import { useChallenge } from '../hooks/useChallenge';
 import { useStreak } from '../hooks/useStreak';
 
@@ -14,9 +14,17 @@ export function ChallengeProvider({ children }) {
         challenge.state.startDate
     );
 
+    const [language, setLanguage] = useState('en');
+
+    const toggleLanguage = useCallback(() => {
+        setLanguage(prev => prev === 'en' ? 'hi' : 'en');
+    }, []);
+
     const value = {
         ...challenge,
         streak,
+        language,
+        toggleLanguage,
     };
 
     return (

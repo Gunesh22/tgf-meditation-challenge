@@ -7,12 +7,13 @@ import { Modal } from '../ui/Modal';
 import { Button } from '../ui/Button';
 import { useChallengeContext } from '../../context/ChallengeContext';
 import { FEELINGS, WISDOMS } from '../../constants';
+import { t } from '../../utils/translations';
 import './ReflectionModal.css';
 
 const STEPS = { CONFIRM: 'confirm', REFLECT: 'reflect', COMPLETE: 'complete' };
 
 export function ReflectionModal({ isOpen, onClose, dayNum, onComplete }) {
-    const { completeDay } = useChallengeContext();
+    const { completeDay, language } = useChallengeContext();
     const [step, setStep] = useState(STEPS.CONFIRM);
     const [feeling, setFeeling] = useState('');
     const [thought, setThought] = useState('');
@@ -51,14 +52,14 @@ export function ReflectionModal({ isOpen, onClose, dayNum, onComplete }) {
             {step === STEPS.CONFIRM && (
                 <div className="modal-step">
                     <div className="modal-icon">🌿</div>
-                    <h3>Did you complete Day {dayNum}'s meditation?</h3>
-                    <p>Be honest with yourself. Every moment of silence counts.</p>
+                    <h3>{t(language, 'reflectConfirmTitle', { day: dayNum })}</h3>
+                    <p>{t(language, 'reflectConfirmSub')}</p>
                     <div className="confirm-buttons">
                         <Button variant="confirm" onClick={handleConfirmYes}>
-                            Yes, I did
+                            {t(language, 'reflectConfirmYes')}
                         </Button>
                         <Button variant="danger" onClick={handleClose}>
-                            Not yet
+                            {t(language, 'reflectConfirmNotYet')}
                         </Button>
                     </div>
                 </div>
@@ -68,7 +69,7 @@ export function ReflectionModal({ isOpen, onClose, dayNum, onComplete }) {
             {step === STEPS.REFLECT && (
                 <div className="modal-step">
                     <div className="modal-icon">💭</div>
-                    <h3>How did it feel?</h3>
+                    <h3>{t(language, 'reflectFeelingTitle')}</h3>
                     <div className="feeling-options">
                         {FEELINGS.map((f) => (
                             <label key={f.value} className="feeling-chip">
@@ -79,17 +80,17 @@ export function ReflectionModal({ isOpen, onClose, dayNum, onComplete }) {
                                     checked={feeling === f.value}
                                     onChange={() => setFeeling(f.value)}
                                 />
-                                <span>{f.emoji} {f.label}</span>
+                                <span>{f.emoji} {t(language, `feeling_${f.value}`)}</span>
                             </label>
                         ))}
                     </div>
                     <div className="thought-group">
                         <label htmlFor="thought-input">
-                            Share a thought <span className="optional-tag">(optional)</span>
+                            {t(language, 'reflectThoughtShare')} <span className="optional-tag">{t(language, 'reflectOptionalTag')}</span>
                         </label>
                         <textarea
                             id="thought-input"
-                            placeholder="What came to mind during your practice..."
+                            placeholder={t(language, 'reflectThoughtPlaceholder')}
                             rows={3}
                             maxLength={280}
                             value={thought}
@@ -97,7 +98,7 @@ export function ReflectionModal({ isOpen, onClose, dayNum, onComplete }) {
                         />
                     </div>
                     <Button variant="primary" onClick={handleSubmit}>
-                        Submit
+                        {t(language, 'reflectSubmitBtn')}
                     </Button>
                 </div>
             )}
@@ -112,11 +113,11 @@ export function ReflectionModal({ isOpen, onClose, dayNum, onComplete }) {
                         </svg>
                     </div>
                     <div className="modal-icon">🌿</div>
-                    <h3>Beautiful.</h3>
-                    <p className="completion-day">Day {dayNum} completed.</p>
+                    <h3>{t(language, 'reflectCompletedTitle')}</h3>
+                    <p className="completion-day">{t(language, 'reflectDayCompleted', { day: dayNum })}</p>
                     <p className="completion-wisdom">{wisdom}</p>
                     <Button variant="primary" onClick={handleDone}>
-                        Continue
+                        {t(language, 'reflectContinueBtn')}
                     </Button>
                 </div>
             )}

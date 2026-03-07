@@ -4,9 +4,12 @@
 import { useState, useEffect } from 'react';
 import { countMeditatedToday, getTotalParticipants } from '../../services/firestore';
 import { getTodayISO } from '../../utils/dateHelpers';
+import { useChallengeContext } from '../../context/ChallengeContext';
+import { t } from '../../utils/translations';
 import './CommunityCard.css';
 
 export function CommunityCard() {
+    const { language } = useChallengeContext();
     const [todayCount, setTodayCount] = useState(0);
     const [totalParticipants, setTotalParticipants] = useState(0);
 
@@ -39,13 +42,13 @@ export function CommunityCard() {
                 <div className="community-card__glow" />
                 <span className="community-card__leaf">🌿</span>
                 <p className="community-card__number">{todayCount.toLocaleString()}</p>
-                <p className="community-card__label">people meditated today</p>
+                <p className="community-card__label">{t(language, 'peopleMeditated')}</p>
                 <p className="community-card__message">
-                    You are part of this collective stillness.
+                    {t(language, 'partOfCollective')}
                 </p>
                 {totalParticipants > 0 && (
                     <p className="community-card__total">
-                        {totalParticipants.toLocaleString()} seekers have joined the challenge
+                        {t(language, 'seekersJoined', { total: totalParticipants.toLocaleString() })}
                     </p>
                 )}
             </div>

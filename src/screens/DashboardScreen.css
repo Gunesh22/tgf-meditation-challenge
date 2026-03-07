@@ -21,6 +21,29 @@
     border-bottom: 1px solid var(--border-subtle);
 }
 
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.lang-toggle-btn {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-full);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.lang-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--text-accent);
+}
+
 .greeting-hello {
     font-size: 0.78rem;
     color: var(--text-muted);

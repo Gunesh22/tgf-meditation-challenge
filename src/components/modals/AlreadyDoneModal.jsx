@@ -3,16 +3,19 @@
 
 import { Modal } from '../ui/Modal';
 import { Button } from '../ui/Button';
+import { useChallengeContext } from '../../context/ChallengeContext';
+import { t } from '../../utils/translations';
 
 export function AlreadyDoneModal({ isOpen, onClose }) {
+    const { language } = useChallengeContext();
     return (
         <Modal isOpen={isOpen} onClose={onClose} className="small-modal">
             <div className="modal-step">
                 <div className="modal-icon">✨</div>
-                <h3>You've already meditated today!</h3>
-                <p>Rest now. Tomorrow brings a new moment of stillness.</p>
+                <h3>{t(language, 'alreadyDoneTitle')}</h3>
+                <p>{t(language, 'alreadyDoneSub')}</p>
                 <Button variant="primary" onClick={onClose}>
-                    Okay
+                    {t(language, 'alreadyDoneOkayBtn')}
                 </Button>
             </div>
         </Modal>

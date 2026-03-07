@@ -4,13 +4,14 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useChallengeContext } from '../context/ChallengeContext';
+import { t } from '../utils/translations';
 
 // Dashboard components
 import { TodayCard } from '../components/dashboard/TodayCard';
 import { ProgressGrid } from '../components/dashboard/ProgressGrid';
 import { StreakBar } from '../components/dashboard/StreakBar';
 import { CommunityCard } from '../components/dashboard/CommunityCard';
-import { LiveSessions } from '../components/dashboard/LiveSessions';
+
 import { ReflectionsList } from '../components/dashboard/ReflectionsList';
 import { CompleteBanner } from '../components/dashboard/CompleteBanner';
 
@@ -27,7 +28,10 @@ export function DashboardScreen() {
         currentDay,
         isDayCompleted,
         isChallengeComplete,
+        isChallengeFailed,
         resetChallenge,
+        language,
+        toggleLanguage
     } = useChallengeContext();
 
     const navigate = useNavigate();
@@ -58,8 +62,11 @@ export function DashboardScreen() {
         topRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, []);
 
-    // When user clicks "I Meditated Today" on the TodayCard
     const handleMeditateClick = useCallback(() => {
+        if (isChallengeFailed) {
+            alert(t(language, 'bannerFailedText'));
+            return;
+        }
         if (isChallengeComplete) {
             setShowCertificate(true);
             return;
@@ -69,7 +76,7 @@ export function DashboardScreen() {
             return;
         }
         setShowReflection(true);
-    }, [selectedDay, isDayCompleted, isChallengeComplete]);
+    }, [selectedDay, isDayCompleted, isChallengeComplete, isChallengeFailed, language]);
 
     const handleReflectionComplete = useCallback(() => {
         // After completing, check if challenge is now done
@@ -91,12 +98,17 @@ export function DashboardScreen() {
             {/* Header */}
             <header className="dash-header">
                 <div className="header-left">
-                    <span className="greeting-hello">Happy Thoughts</span>
+                    <span className="greeting-hello">{t(language, 'greeting')}</span>
                     <h2 className="greeting-name">{state.name} 🌿</h2>
                 </div>
-                <div className="day-badge">
-                    <span className="day-badge__number">{selectedDay}</span>
-                    <span className="day-badge__label">of 11</span>
+                <div className="header-right">
+                    <button className="lang-toggle-btn" onClick={toggleLanguage}>
+                        {language === 'en' ? 'अ / A' : 'A / अ'}
+                    </button>
+                    <div className="day-badge">
+                        <span className="day-badge__number">{selectedDay}</span>
+                        <span className="day-badge__label">{t(language, 'of')}</span>
+                    </div>
                 </div>
             </header>
 
@@ -119,17 +131,15 @@ export function DashboardScreen() {
             {/* Community */}
             <CommunityCard />
 
-            {/* Live sessions */}
-            <LiveSessions />
 
             {/* Reflections */}
             <ReflectionsList />
 
             {/* Footer */}
             <footer className="dash-footer">
-                <p>🪷 Tej Gyan Foundation Meditation Challenge</p>
+                <p>{t(language, 'footerText')}</p>
                 <button className="btn-reset" onClick={handleLogout}>
-                    Logout
+                    {t(language, 'logout')}
                 </button>
             </footer>
 
