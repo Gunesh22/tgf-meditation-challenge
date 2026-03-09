@@ -101,3 +101,63 @@
     font-size: 0.88rem;
     color: var(--text-secondary);
 }
+
+.next-challenges-section {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.next-challenges-section h4 {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.next-challenges-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.next-challenge-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-medium);
+    padding: 10px 14px;
+    border-radius: 12px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.next-challenge-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--gold-400);
+}
+
+.next-item-icon {
+    font-size: 1.5rem;
+}
+
+.next-item-info h6 {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.next-item-info span {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.cert-footer-close {
+    margin-top: 20px;
+}
+
+.full-width {
+    width: 100%;
+}

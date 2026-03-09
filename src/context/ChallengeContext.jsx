@@ -10,14 +10,21 @@ const ChallengeContext = createContext(null);
 export function ChallengeProvider({ children }) {
     const challenge = useChallenge();
     const streak = useStreak(
-        challenge.state.completedDays,
-        challenge.state.startDate
+        challenge.activeData?.completedDays || {},
+        challenge.activeData?.startDate || null,
+        challenge.totalDays
     );
 
-    const [language, setLanguage] = useState('en');
+    const [language, setLanguage] = useState(() => {
+        return localStorage.getItem('tgf_meditation_language') || 'en';
+    });
 
     const toggleLanguage = useCallback(() => {
-        setLanguage(prev => prev === 'en' ? 'hi' : 'en');
+        setLanguage(prev => {
+            const nextLang = prev === 'en' ? 'hi' : 'en';
+            localStorage.setItem('tgf_meditation_language', nextLang);
+            return nextLang;
+        });
     }, []);
 
     const value = {

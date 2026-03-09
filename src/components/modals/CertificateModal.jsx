@@ -1,7 +1,5 @@
-// ===== CertificateModal =====
-// Shows a certificate after completing all 11 days.
-
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useChallengeContext } from '../../context/ChallengeContext';
 import { Modal } from '../ui/Modal';
 import { Button } from '../ui/Button';
@@ -11,21 +9,48 @@ import { t } from '../../utils/translations';
 import './CertificateModal.css';
 
 export function CertificateModal({ isOpen, onClose }) {
-    const { state, language } = useChallengeContext();
+    const {
+        state,
+        language,
+        activeChallengeDef,
+        availableChallenges,
+        totalDays,
+        joinSpecificChallenge,
+        selectChallenge
+    } = useChallengeContext();
+
+    const navigate = useNavigate();
     const certRef = useRef(null);
     const [isSharing, setIsSharing] = useState(false);
+
+    const nextChallenges = useMemo(() => {
+        return availableChallenges.filter(c => c.id !== activeChallengeDef?.id);
+    }, [activeChallengeDef, availableChallenges]);
+
+    const handleNextChallenge = (challengeId) => {
+        const isJoined = !!state.challenges?.[challengeId];
+        if (isJoined) {
+            selectChallenge(challengeId);
+        } else {
+            joinSpecificChallenge(challengeId);
+        }
+        onClose();
+        navigate('/dashboard');
+    };
 
     const handleShare = async () => {
         if (!certRef.current || isSharing) return;
 
         setIsSharing(true);
-        const text = t(language, 'certShareText');
+        const challengeName = activeChallengeDef?.title || t(language, 'certTitle');
+        const text = language === 'hi'
+            ? `🪷 मैंने तेज ज्ञान फाउंडेशन की "${challengeName}" चुनौती पूरी कर ली है!`
+            : `🪷 I completed the Tej Gyan Foundation "${challengeName}"!`;
 
         try {
-            // Generate PNG Blob from the DOM
             const blob = await toBlob(certRef.current, {
                 cacheBust: true,
-                backgroundColor: '#060e0a', // Use --bg-deep
+                backgroundColor: '#060e0a',
                 style: { margin: '0' },
             });
 
@@ -33,7 +58,6 @@ export function CertificateModal({ isOpen, onClose }) {
 
             const file = new File([blob], 'tgf-meditation-certificate.png', { type: 'image/png' });
 
-            // Check if Web Share API supports files
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 await navigator.share({
                     title: 'Meditation Certificate',
@@ -41,7 +65,6 @@ export function CertificateModal({ isOpen, onClose }) {
                     files: [file],
                 });
             } else {
-                // Fallback: Download the image directly
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
@@ -51,7 +74,6 @@ export function CertificateModal({ isOpen, onClose }) {
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
 
-                // Copy text as a bonus
                 try {
                     await navigator.clipboard.writeText(text);
                     alert(t(language, 'certDownloaded'));
@@ -74,12 +96,15 @@ export function CertificateModal({ isOpen, onClose }) {
                     <div className="cert-content">
                         <div className="cert-lotus">🪷</div>
                         <p className="cert-pre">{t(language, 'certCompletion')}</p>
-                        <h2 className="cert-title">{t(language, 'certTitle')}</h2>
+                        <h2 className="cert-title">{activeChallengeDef?.title || t(language, 'certTitle')}</h2>
                         <div className="cert-divider" />
                         <p className="cert-awarded">{t(language, 'certAwardedTo')}</p>
                         <h3 className="cert-name">{state.name || t(language, 'certDefaultName')}</h3>
                         <p className="cert-body">
-                            {t(language, 'certBodyText')}
+                            {language === 'hi'
+                                ? `तेज ज्ञान फाउंडेशन ध्यान चुनौती के भाग के रूप में ${totalDays} दिनों तक ध्यान अभ्यास सफलतापूर्वक पूरा करने के लिए।`
+                                : `For successfully completing ${totalDays} days of mindful meditation practice as part of the Tej Gyan Foundation ${activeChallengeDef?.title || 'Meditation Challenge'}.`
+                            }
                         </p>
                         <div className="cert-divider" />
                         <p className="cert-date">{formatDate(new Date())}</p>
@@ -87,11 +112,34 @@ export function CertificateModal({ isOpen, onClose }) {
                     </div>
                 </div>
             </div>
+
             <div className="cert-actions">
                 <Button variant="primary" onClick={handleShare}>
                     {isSharing ? t(language, 'certGeneratingBtn') : t(language, 'certShareBtn')}
                 </Button>
-                <Button variant="secondary" onClick={onClose}>
+            </div>
+
+            <div className="next-challenges-section">
+                <h4>{t(language, 'nextJourneyTitle')}</h4>
+                <div className="next-challenges-list">
+                    {nextChallenges.map(challenge => (
+                        <button
+                            key={challenge.id}
+                            className="next-challenge-item"
+                            onClick={() => handleNextChallenge(challenge.id)}
+                        >
+                            <span className="next-item-icon">{challenge.icon}</span>
+                            <div className="next-item-info">
+                                <h6>{challenge.title}</h6>
+                                <span>{challenge.totalDays} {t(language, 'days')}</span>
+                            </div>
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            <div className="cert-footer-close">
+                <Button variant="secondary" onClick={onClose} className="full-width">
                     {t(language, 'certCloseBtn')}
                 </Button>
             </div>

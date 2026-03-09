@@ -9,12 +9,13 @@ import { t } from '../../utils/translations';
 import './ReflectionsList.css';
 
 export function ReflectionsList() {
-    const { state, language } = useChallengeContext();
+    const { activeData, language } = useChallengeContext();
 
     const entries = useMemo(() => {
-        return Object.entries(state.reflections)
+        if (!activeData || !activeData.reflections) return [];
+        return Object.entries(activeData.reflections)
             .sort(([a], [b]) => b.localeCompare(a));
-    }, [state.reflections]);
+    }, [activeData]);
 
     if (entries.length === 0) return null;
 
@@ -32,14 +33,16 @@ export function ReflectionsList() {
             </div>
             <div className="reflections-list">
                 {entries.map(([date, data]) => {
-                    const dayIdx = getDayIndexForDate(state.startDate, date);
+                    const dayIdx = getDayIndexForDate(activeData.startDate, date);
                     return (
                         <div key={date} className="reflection-item">
                             <div className="reflection-item__header">
                                 <span className="reflection-item__day">{t(language, 'day')} {dayIdx}</span>
-                                <span className="reflection-item__feeling">
-                                    {feelingLabel(data.feeling)}
-                                </span>
+                                {data.feeling && (
+                                    <span className="reflection-item__feeling">
+                                        {feelingLabel(data.feeling)}
+                                    </span>
+                                )}
                             </div>
                             {data.thought && (
                                 <p className="reflection-item__thought">"{data.thought}"</p>

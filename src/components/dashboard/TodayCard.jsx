@@ -6,11 +6,16 @@ import { t } from '../../utils/translations';
 import './TodayCard.css';
 
 export function TodayCard({ selectedDay, onMeditateClick }) {
-    const { isDayCompleted, isChallengeComplete, isChallengeFailed, language } = useChallengeContext();
+    const { isDayCompleted, isChallengeComplete, isChallengeFailed, language, adminSettings } = useChallengeContext();
 
     const dayCompleted = isDayCompleted(selectedDay);
 
     let heading, subtext, btnText, btnIcon, btnClass;
+
+    // Derived wisdom from Admin settings
+    const wisdom = language === 'hi'
+        ? (adminSettings?.dailyWisdomHindi || adminSettings?.dailyWisdom)
+        : adminSettings?.dailyWisdom;
 
     if (isChallengeComplete) {
         heading = t(language, 'challengeCompleteHeading');
@@ -26,13 +31,13 @@ export function TodayCard({ selectedDay, onMeditateClick }) {
         btnClass = "btn-meditate completed";
     } else if (dayCompleted) {
         heading = t(language, 'dayCompleteHeading', { day: selectedDay });
-        subtext = t(language, 'dayCompleteSub');
+        subtext = wisdom || t(language, 'dayCompleteSub');
         btnText = t(language, 'alreadyCompletedBtn');
         btnIcon = "✓";
         btnClass = "btn-meditate completed";
     } else {
         heading = t(language, 'dayReadyHeading', { day: selectedDay });
-        subtext = t(language, 'readySub');
+        subtext = wisdom || t(language, 'readySub');
         btnText = t(language, 'iMeditatedBtn');
         btnIcon = "✦";
         btnClass = "btn-meditate";

@@ -27,11 +27,15 @@ export function DashboardScreen() {
         state,
         currentDay,
         isDayCompleted,
+        isDayAllowed,
         isChallengeComplete,
         isChallengeFailed,
+        completedCount,
         resetChallenge,
         language,
-        toggleLanguage
+        toggleLanguage,
+        activeChallengeDef,
+        totalDays
     } = useChallengeContext();
 
     const navigate = useNavigate();
@@ -43,7 +47,10 @@ export function DashboardScreen() {
     // Ensure page starts at the top when navigating from WelcomeScreen
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, []);
+        if (state.registered && !state.activeChallengeId) {
+            navigate('/library', { replace: true });
+        }
+    }, [state.registered, state.activeChallengeId, navigate]);
 
     // Sync selected day if the actual current challenge day rolls over
     useEffect(() => {
@@ -75,13 +82,21 @@ export function DashboardScreen() {
             setShowAlreadyDone(true);
             return;
         }
+        // Block days that are too far in the past or in the future
+        if (!isDayAllowed(selectedDay)) {
+            return;
+        }
         setShowReflection(true);
-    }, [selectedDay, isDayCompleted, isChallengeComplete, isChallengeFailed, language]);
+    }, [selectedDay, isDayCompleted, isDayAllowed, isChallengeComplete, isChallengeFailed, language]);
 
     const handleReflectionComplete = useCallback(() => {
-        // After completing, check if challenge is now done
-        // (completedCount will update on next render via context)
-    }, []);
+        // After completing, check if challenge is now done (completedCount + 1 because
+        // state hasn't re-rendered yet — the day we just completed is the +1)
+        if (completedCount + 1 >= totalDays) {
+            // Small delay so the reflection modal closes first
+            setTimeout(() => setShowCertificate(true), 600);
+        }
+    }, [completedCount, totalDays]);
 
     const handleLogout = useCallback(() => {
         if (window.confirm('Are you sure you want to logout? You can return if you use the exact same phone number and email.')) {
@@ -98,8 +113,10 @@ export function DashboardScreen() {
             {/* Header */}
             <header className="dash-header">
                 <div className="header-left">
-                    <span className="greeting-hello">{t(language, 'greeting')}</span>
-                    <h2 className="greeting-name">{state.name} 🌿</h2>
+                    <button className="back-library-btn" onClick={() => navigate('/library')}>
+                        ← {t(language, 'back')}
+                    </button>
+                    <h2 className="greeting-name title-challenge">{activeChallengeDef?.title || 'Meditation Challenge'}</h2>
                 </div>
                 <div className="header-right">
                     <button className="lang-toggle-btn" onClick={toggleLanguage}>
@@ -107,7 +124,7 @@ export function DashboardScreen() {
                     </button>
                     <div className="day-badge">
                         <span className="day-badge__number">{selectedDay}</span>
-                        <span className="day-badge__label">{t(language, 'of')}</span>
+                        <span className="day-badge__label">{t(language, 'of')} {totalDays}</span>
                     </div>
                 </div>
             </header>
@@ -125,6 +142,7 @@ export function DashboardScreen() {
             <ProgressGrid
                 selectedDay={selectedDay}
                 onDaySelect={handleDaySelect}
+                isDayAllowed={isDayAllowed}
             />
             <StreakBar />
 

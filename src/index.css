@@ -116,3 +116,31 @@ textarea {
 .hide-scrollbar::-webkit-scrollbar {
     display: none;
 }
+
+/* Transitions & Animations */
+.spin {
+    animation: spin 3s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    padding: 40px;
+    text-align: center;
+    gap: 16px;
+    color: var(--text-muted);
+}

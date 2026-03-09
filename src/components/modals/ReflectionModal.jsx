@@ -23,7 +23,9 @@ export function ReflectionModal({ isOpen, onClose, dayNum, onComplete }) {
     }, []);
 
     const handleSubmit = useCallback(() => {
-        completeDay(dayNum, feeling || 'peaceful', thought.trim());
+        // Basic XSS mitigation: strip < and > tags from the thought string
+        const sanitizedThought = thought ? thought.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;') : '';
+        completeDay(dayNum, feeling || '', sanitizedThought);
         setStep(STEPS.COMPLETE);
     }, [dayNum, feeling, thought, completeDay]);
 

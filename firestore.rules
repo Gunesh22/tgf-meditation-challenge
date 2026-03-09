@@ -1,13 +1,48 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Participants can read/write their own data
-    match /participants/{phone} {
-      allow read, write: if true;
+    // 1. Admin configurations: Public read ok, strictly NO writes.
+    match /admin_settings/{doc} {
+      allow read: if true;
+      allow write: if false;
     }
-    // Counters are readable by all, writable by all
+    match /challenges/{challenge} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // 2. User Data: Prevent destructive wiping (no delete).
+    // Provide baseline security since there's no auth token.
+    match /participants/{phone} {
+      allow read, create, update: if true;
+      allow delete: if false;
+    }
+    match /users/{user} {
+      // Allow single unauthenticated get(), but block list queries!
+      // This prevents malicious actors from dumping the entire user database.
+      allow get, create, update: if true;
+      allow list: if false;
+      allow delete: if false;
+    }
+    match /user_challenges/{challenge} {
+      // Must allow list because the dashboard loads using a query by userId.
+      allow read, create, update: if true;
+      allow delete: if false;
+    }
+    match /enrollments/{enrollment} {
+      allow read, create, update: if true;
+      allow delete: if false;
+    }
+    
+    // 3. Counters: No deletion. Count queries require list.
     match /counters/{doc} {
-      allow read, write: if true;
+      allow read, create, update: if true;
+      allow delete: if false;
+    }
+
+    // 4. Default explicitly block anything else
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }

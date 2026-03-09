@@ -1,6 +1,34 @@
 // ===== Challenge Constants =====
 
-export const TOTAL_DAYS = 11;
+// Define the challenges (Admin Panel mockup)
+export const AVAILABLE_CHALLENGES = [
+    {
+        id: '11_day_intro',
+        title: '11-Day Meditation Challenge',
+        totalDays: 11,
+        icon: '🪷',
+        description: 'Begin your journey with 11 days of basic mindfulness and finding inner peace.',
+        availableFrom: '2026-03-01'
+    },
+    {
+        id: '21_day_deep',
+        title: '21-Day Deep Silence',
+        totalDays: 21,
+        icon: '🌌',
+        description: 'Dive deeper into stillness and expand your awareness with this advanced practice.',
+        availableFrom: '2026-03-05'
+    },
+    {
+        id: '7_day_sleep',
+        title: '7-Day Better Sleep',
+        totalDays: 7,
+        icon: '🌙',
+        description: 'Evening meditations designed to prepare your mind and body for restful sleep.',
+        availableFrom: '2026-03-15' // Upcoming
+    }
+];
+
+export const TOTAL_DAYS = 11; // Retaining temporarily for backward compatibility if missed during migration
 export const STORAGE_KEY = 'tgf_meditation_challenge';
 
 export const FEELINGS = [
@@ -38,7 +66,9 @@ export const INITIAL_STATE = {
     name: '',
     email: '',
     phone: '',
-    startDate: null,
-    completedDays: {},
-    reflections: {},
+    language: 'en',
+
+    // Multi-Challenge Progress
+    activeChallengeId: null, // '11_day_intro'
+    challenges: {}, // { '11_day_intro': { startDate, completedDays, reflections } }
 };

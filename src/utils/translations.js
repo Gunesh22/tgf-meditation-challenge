@@ -1,14 +1,21 @@
 export const translations = {
     en: {
         greeting: "Happy Thoughts",
-        of: "of 11",
+        of: "of",
+        back: "Back",
         logout: "Logout",
+        libraryTitle: "Your Next Journey Awaits",
+        librarySub: "Choose a meditation challenge to begin or continue.",
+        nextJourneyTitle: "What's your next journey?",
+        startedOn: "Started on: {date}",
+        upcoming: "Upcoming",
+        availableFrom: "Available from: {date}",
         // TodayCard
         challengeCompleteHeading: "You've completed the challenge! 🎉",
         challengeCompleteSub: "All 11 days of mindful practice. Beautiful.",
         challengeCompleteBtn: "Challenge Complete",
         challengeFailedHeading: "Challenge Ended",
-        challengeFailedSub: "The 11 days have passed, but your journey continues.",
+        challengeFailedSub: "The challenge period has passed, but your journey continues.",
         challengeFailedBtn: "Try Again Next Time",
         dayCompleteHeading: "Day {day} — Practice complete ✨",
         dayCompleteSub: "This day is done. Select another day or rest.",
@@ -21,7 +28,7 @@ export const translations = {
         partOfCollective: "You are part of this collective stillness.",
         seekersJoined: "{total} seekers have joined the challenge",
         // ProgressGrid
-        yourJourney: "Your 11-Day Journey",
+        yourJourney: "Your Journey",
         day: "Day",
         dayCompleted: "Day {day} - Completed",
         daySelected: "Day {day} - Selected",
@@ -31,10 +38,10 @@ export const translations = {
         streakBroken: "Streak reset. But your awareness continues.",
         // Banner
         bannerHeading: "Challenge Complete!",
-        bannerText: "You completed 11 days of mindful meditation. Your dedication is inspiring.",
+        bannerText: "You completed your mindful meditation journey. Your dedication is inspiring.",
         viewCertificate: "View Certificate",
         bannerFailedHeading: "Challenge Ended",
-        bannerFailedText: "The 11-day period has passed, but your journey doesn't stop here. See you in the next challenge!",
+        bannerFailedText: "The challenge period has passed, but your journey doesn't stop here. See you in the next challenge!",
         // Footer
         footerText: "🪷 Tej Gyan Foundation Meditation Challenge",
         // Reflections
@@ -82,14 +89,21 @@ export const translations = {
     },
     hi: {
         greeting: "Happy Thoughts",
-        of: "11 में से",
+        of: "से",
+        back: "पीछे",
         logout: "लॉग आउट",
+        libraryTitle: "आपकी अगली यात्रा आपका इंतज़ार कर रही है",
+        librarySub: "शुरू करने या जारी रखने के लिए एक ध्यान चुनौती चुनें।",
+        nextJourneyTitle: "आपकी अगली यात्रा क्या है?",
+        startedOn: "प्रारंभ तिथि: {date}",
+        upcoming: "आगामी",
+        availableFrom: "उपलब्ध तिथि: {date}",
         // TodayCard
         challengeCompleteHeading: "आपने चुनौती पूरी कर ली है! 🎉",
         challengeCompleteSub: "ध्यान के सभी 11 दिन। बहुत सुंदर।",
         challengeCompleteBtn: "चुनौती पूर्ण",
         challengeFailedHeading: "चुनौती समाप्त",
-        challengeFailedSub: "11 दिन बीत चुके हैं, लेकिन आपकी यात्रा जारी है।",
+        challengeFailedSub: "समय सीमा समाप्त हो गई है, लेकिन आपकी यात्रा जारी है।",
         challengeFailedBtn: "अगली बार फिर प्रयास करें",
         dayCompleteHeading: "दिन {day} — अभ्यास पूरा हुआ ✨",
         dayCompleteSub: "आज का दिन पूरा हुआ। अन्य दिन चुनें या आराम करें।",
@@ -102,7 +116,7 @@ export const translations = {
         partOfCollective: "आप इस सामूहिक ध्यान का हिस्सा हैं।",
         seekersJoined: "{total} साधक इस चुनौती में शामिल हुए हैं",
         // ProgressGrid
-        yourJourney: "आपकी 11-दिवसीय यात्रा",
+        yourJourney: "आपकी यात्रा",
         day: "दिन",
         dayCompleted: "दिन {day} - पूरा हुआ",
         daySelected: "दिन {day} - चयनित",
@@ -115,7 +129,7 @@ export const translations = {
         bannerText: "आपने 11 दिनों का सचेत ध्यान पूरा किया। आपका समर्पण प्रेरणादायक है।",
         viewCertificate: "प्रमाणपत्र देखें",
         bannerFailedHeading: "चुनौती समाप्त",
-        bannerFailedText: "11 दिन पूरे हो गए हैं, लेकिन आपकी यात्रा यहाँ नहीं रुकती। अगली चुनौती में मिलते हैं!",
+        bannerFailedText: "समय सीमा समाप्त हो गई है, लेकिन आपकी यात्रा यहाँ नहीं रुकती। अगली चुनौती में मिलते हैं!",
         // Footer
         footerText: "🪷 तेज ज्ञान फाउंडेशन ध्यान चुनौती",
         // Reflections

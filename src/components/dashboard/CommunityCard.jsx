@@ -32,8 +32,7 @@ export function CommunityCard() {
         }
 
         fetchCounts();
-        const interval = setInterval(fetchCounts, 30000);
-        return () => { cancelled = true; clearInterval(interval); };
+        return () => { cancelled = true; };
     }, []);
 
     return (

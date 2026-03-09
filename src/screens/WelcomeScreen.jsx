@@ -1,12 +1,12 @@
 // ===== WelcomeScreen =====
 // Registration screen — name + phone, then redirect to dashboard.
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useChallengeContext } from '../context/ChallengeContext';
 import { FloatingParticles } from '../components/ui/FloatingParticles';
 import { Button } from '../components/ui/Button';
-import { generateWelcomeCount } from '../utils/communityCount';
+import { getTotalParticipants } from '../services/firestore';
 import './WelcomeScreen.css';
 
 export function WelcomeScreen() {
@@ -18,7 +18,24 @@ export function WelcomeScreen() {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [error, setError] = useState('');
-    const [communityCount] = useState(() => generateWelcomeCount());
+    const [communityCount, setCommunityCount] = useState(0);
+    // Timer ref to cancel pending logins if component unmounts
+    const timeoutRef = useRef(null);
+
+    useEffect(() => {
+        let isMounted = true;
+        getTotalParticipants().then(count => {
+            if (isMounted) {
+                setCommunityCount(count);
+            }
+        }).catch(err => console.warn('Failed to get participants', err));
+
+        return () => {
+            isMounted = false;
+            // Clear any pending registration if the user leaves early
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        };
+    }, []);
 
     const handleSubmit = useCallback((e) => {
         e.preventDefault();
@@ -43,9 +60,9 @@ export function WelcomeScreen() {
         setIsRegistering(true);
 
         // Simulate a calming delay for the preparation screen
-        setTimeout(() => {
-            register(name.trim(), email.trim(), phone.trim());
-            navigate('/dashboard', { replace: true, state: { fromLogin: true } });
+        timeoutRef.current = setTimeout(async () => {
+            await register(name.trim(), email.trim(), phone.trim());
+            navigate('/library', { replace: true, state: { fromLogin: true } });
         }, 2500);
     }, [name, email, phone, register, navigate]);
 
@@ -71,7 +88,7 @@ export function WelcomeScreen() {
                 <div className="welcome-logo fade-in">
                     <div className="lotus-icon">🪷</div>
                     <h1 className="welcome-title">
-                        11-Day<br /><span>Meditation Challenge</span>
+                        Meditation<br /><span>Challenge Platform</span>
                     </h1>
                     <p className="welcome-subtitle">by Tej Gyan Foundation</p>
                 </div>
@@ -138,7 +155,7 @@ export function WelcomeScreen() {
                 {/* Community badge */}
                 <div className="community-badge fade-in delay-3">
                     <div className="pulse-dot" />
-                    <span>{communityCount.toLocaleString()} seekers have joined</span>
+                    <span>{communityCount > 0 ? communityCount.toLocaleString() : '...'} seekers have joined</span>
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@ import { getFirestore } from 'firebase/firestore';
 import { getAnalytics } from 'firebase/analytics';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBtLTZInxyKjbQCoSvqKOGDdOjhrOFfgaM",
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
     authDomain: "tgf-meditation.firebaseapp.com",
     projectId: "tgf-meditation",
     storageBucket: "tgf-meditation.firebasestorage.app",
