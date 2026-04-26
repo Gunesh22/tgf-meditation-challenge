@@ -31,8 +31,8 @@ export function CommunityCard() {
             }
         }
 
-        // Initial fetch without forcing refresh (uses cache if available)
-        fetchCounts(false);
+        // Initial fetch forcing refresh to bypass memory cache on SPA navigation
+        fetchCounts(true);
 
         // Fetch every 15 seconds, forcing cache bypass for real-time updates
         const intervalId = setInterval(() => {
