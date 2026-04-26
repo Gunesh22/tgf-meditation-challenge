@@ -10,6 +10,16 @@ export function useChallenge() {
     const [adminSettings, setAdminSettings] = useState(null);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
 
+    // Listen to real-time updates for available challenges
+    useEffect(() => {
+        const unsubscribe = firestore.listenToChallenges((challenges) => {
+            if (challenges?.length > 0) {
+                setAvailableChallenges(challenges);
+            }
+        });
+        return () => unsubscribe();
+    }, []);
+
     // Sync from Firestore on mount
     // Uses functional setState to avoid stale closure over `state`
     useEffect(() => {
@@ -17,14 +27,10 @@ export function useChallenge() {
 
         (async () => {
             try {
-                // 1. Fetch Admin Constants (Challenges + Quotes)
-                const [challenges, settings] = await Promise.all([
-                    firestore.fetchChallenges(),
-                    firestore.fetchAdminSettings()
-                ]);
+                // 1. Fetch Admin Constants (Quotes/Settings)
+                const settings = await firestore.fetchAdminSettings();
 
                 if (!cancelled) {
-                    if (challenges?.length > 0) setAvailableChallenges(challenges);
                     if (settings) setAdminSettings(settings);
                 }
 

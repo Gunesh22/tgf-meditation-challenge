@@ -22,7 +22,8 @@ import {
     where,
     writeBatch,
     updateDoc,
-    limit
+    limit,
+    onSnapshot
 } from 'firebase/firestore';
 
 // ============ IN-MEMORY CACHE ============
@@ -311,6 +312,28 @@ export async function fetchChallenges() {
         cache.challenges.data = fetched;
         cache.challenges.timestamp = now;
         return fetched;
+    });
+}
+
+/**
+ * Listen for real-time updates to available challenges
+ */
+export function listenToChallenges(callback) {
+    const q = query(collection(db, CHALLENGES), limit(100));
+    return onSnapshot(q, (querySnapshot) => {
+        const fetched = [];
+        querySnapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+            if (data.isActive !== false) {
+                fetched.push({ id: docSnap.id, ...data });
+            }
+        });
+        
+        // Update cache as well
+        cache.challenges.data = fetched;
+        cache.challenges.timestamp = Date.now();
+        
+        callback(fetched);
     });
 }
 
