@@ -4,7 +4,7 @@
 
 .certificate-wrapper {
     padding: 4px;
-    background: linear-gradient(135deg, var(--gold-400), var(--green-600), var(--gold-400));
+    background: var(--gold-400);
     border-radius: var(--radius-lg);
     margin-bottom: 20px;
 }
@@ -20,7 +20,7 @@
     border: 1px dashed rgba(255, 202, 40, 0.3);
     border-radius: calc(var(--radius-lg) - 6px);
     text-align: center;
-    background: radial-gradient(ellipse at 50% 20%, rgba(30, 70, 45, 0.3), transparent 70%);
+    background: transparent;
 }
 
 .cert-lotus {
@@ -48,7 +48,7 @@
 .cert-divider {
     width: 60px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold-400), transparent);
+    background: var(--gold-400);
     margin: 14px auto;
 }
 

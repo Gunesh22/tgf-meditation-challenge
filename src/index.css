@@ -10,39 +10,39 @@
 
 :root {
     /* Background */
-    --bg-deep: #060e0a;
-    --bg-card: #0d1f16;
-    --bg-card-hover: #132b1e;
-    --bg-surface: #162a1f;
-    --bg-glass: rgba(16, 42, 28, 0.65);
+    --bg-deep: #ffffff;
+    --bg-card: #f9fafb;
+    --bg-card-hover: #f3f4f6;
+    --bg-surface: #e5e7eb;
+    --bg-glass: rgba(255, 255, 255, 0.85);
 
-    /* Green palette */
-    --green-50: #e8f5e9;
-    --green-100: #c8e6c9;
-    --green-200: #a5d6a7;
-    --green-300: #81c784;
-    --green-400: #66bb6a;
-    --green-500: #4caf50;
-    --green-600: #43a047;
-    --green-700: #388e3c;
-    --green-800: #2e7d32;
-    --green-900: #1b5e20;
+    /* Green palette -> Re-mapped to Yellow Theme */
+    --green-50: #fefce8;
+    --green-100: #fef9c3;
+    --green-200: #fef08a;
+    --green-300: #fde047;
+    --green-400: #FFD600; /* Flyer Yellow */
+    --green-500: #eab308;
+    --green-600: #ca8a04;
+    --green-700: #FFD600; 
+    --green-800: #eab308;
+    --green-900: #FFD600;
 
     /* Gold accent */
-    --gold-300: #ffd54f;
-    --gold-400: #ffca28;
-    --gold-500: #ffc107;
-    --gold-600: #ffb300;
+    --gold-300: #fde047;
+    --gold-400: #FFD600;
+    --gold-500: #eab308;
+    --gold-600: #ca8a04;
 
     /* Text */
-    --text-primary: #e8f0ec;
-    --text-secondary: #9db8a8;
-    --text-muted: #6a8a78;
-    --text-accent: #a8e6b0;
+    --text-primary: #111827; /* Dark black */
+    --text-secondary: #374151; /* Dark grey */
+    --text-muted: #6b7280; /* Medium grey */
+    --text-accent: #000000; /* Solid black */
 
     /* Borders */
-    --border-subtle: rgba(168, 230, 176, 0.08);
-    --border-medium: rgba(168, 230, 176, 0.15);
+    --border-subtle: rgba(0, 0, 0, 0.12);
+    --border-medium: rgba(0, 0, 0, 0.25);
 
     /* Radii */
     --radius-sm: 10px;
@@ -52,8 +52,8 @@
     --radius-full: 100px;
 
     /* Shadows */
-    --shadow-soft: 0 2px 20px rgba(0, 0, 0, 0.3);
-    --shadow-glow: 0 0 40px rgba(76, 175, 80, 0.15);
+    --shadow-soft: 0 2px 20px rgba(0, 0, 0, 0.1);
+    --shadow-glow: 0 0 40px rgba(255, 214, 0, 0.3);
 
     /* Typography */
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;

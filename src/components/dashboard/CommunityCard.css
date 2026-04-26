@@ -4,12 +4,13 @@
 
 .community-card {
     position: relative;
-    background: linear-gradient(160deg, rgba(20, 60, 35, 0.5), var(--bg-card));
-    border: 1px solid var(--border-medium);
+    background: var(--gold-400); 
+    border: none;
     border-radius: var(--radius-xl);
     padding: 32px 24px;
     text-align: center;
     overflow: hidden;
+    box-shadow: 0 8px 32px rgba(255, 214, 0, 0.3);
 }
 
 .community-card__glow {
@@ -19,7 +20,7 @@
     transform: translateX(-50%);
     width: 200px;
     height: 200px;
-    background: radial-gradient(circle, rgba(76, 175, 80, 0.12), transparent 70%);
+    background: transparent;
     pointer-events: none;
 }
 
@@ -41,7 +42,8 @@
 
 .community-card__label {
     font-size: 0.9rem;
-    color: var(--text-secondary);
+    color: var(--text-primary);
+    font-weight: 600;
     margin-top: 4px;
     position: relative;
 }
@@ -49,17 +51,19 @@
 .community-card__message {
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 0.88rem;
-    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-primary);
     margin-top: 14px;
     position: relative;
 }
 
 .community-card__total {
-    font-size: 0.78rem;
-    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
     margin-top: 10px;
     padding-top: 10px;
-    border-top: 1px solid var(--border-subtle);
+    border-top: 1px solid rgba(0,0,0,0.15);
     position: relative;
 }

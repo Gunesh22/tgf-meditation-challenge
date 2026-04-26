@@ -10,9 +10,11 @@
 
 .reflection-item {
     padding: 14px 16px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
+    background: #ffffff;
+    border: 2px solid var(--gold-400);
     border-radius: var(--radius-md);
+    box-shadow: 4px 4px 0px rgba(255, 214, 0, 0.4);
+    margin-bottom: 4px;
 }
 
 .reflection-item__header {
