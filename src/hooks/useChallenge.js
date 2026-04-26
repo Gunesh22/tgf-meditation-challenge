@@ -34,8 +34,10 @@ export function useChallenge() {
                     setState(prev => { resolve(prev); return prev; });
                 });
 
-                if (latestState.phone) {
-                    let remote = await firestore.getParticipant(latestState.phone);
+                const userIdentifier = latestState.phone || latestState.email;
+
+                if (userIdentifier) {
+                    let remote = await firestore.getParticipant(userIdentifier);
 
                     // Recover missing remote profile (if they registered while blocked/offline)
                     if (!remote && latestState.name) {
@@ -50,7 +52,7 @@ export function useChallenge() {
                         // Push any local challenges/progress that didn't make it to Firebase
                         if (latestState.challenges) {
                             await firestore.syncOfflineChallenges(
-                                latestState.phone,
+                                userIdentifier,
                                 latestState.challenges,
                                 remote.challenges || {}
                             ).catch(console.warn);
@@ -92,7 +94,7 @@ export function useChallenge() {
         })();
 
         return () => { cancelled = true; };
-    }, [state.phone]);
+    }, [state.phone, state.email]);
 
     // --- Drain pending sync queue (retry failed Firestore writes) ---
     const drainPendingSyncs = useCallback(async () => {
@@ -159,9 +161,10 @@ export function useChallenge() {
             next.challenges[challengeId] = { startDate: actualStartDate, completedDays: {}, reflections: {} };
 
             // Sync to firestore — enqueue on failure for later retry
-            if (state.phone) {
-                firestore.joinChallenge(state.phone, challengeId, actualStartDate).catch(() => {
-                    enqueueSync('joinChallenge', [state.phone, challengeId, actualStartDate]);
+            const userIdentifier = state.phone || state.email;
+            if (userIdentifier) {
+                firestore.joinChallenge(userIdentifier, challengeId, actualStartDate).catch(() => {
+                    enqueueSync('joinChallenge', [userIdentifier, challengeId, actualStartDate]);
                 });
             }
         }
@@ -243,9 +246,10 @@ export function useChallenge() {
 
         persist(next);
 
-        if (state.phone) {
-            firestore.completeDay(state.phone, challengeId, dateForDay, feeling, thought).catch(() => {
-                enqueueSync('completeDay', [state.phone, challengeId, dateForDay, feeling, thought]);
+        const userIdentifier = state.phone || state.email;
+        if (userIdentifier) {
+            firestore.completeDay(userIdentifier, challengeId, dateForDay, feeling, thought).catch(() => {
+                enqueueSync('completeDay', [userIdentifier, challengeId, dateForDay, feeling, thought]);
             });
         }
     }, [state, activeData, persist, isDayAllowed]);

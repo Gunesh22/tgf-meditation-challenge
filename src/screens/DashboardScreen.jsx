@@ -11,6 +11,7 @@ import { TodayCard } from '../components/dashboard/TodayCard';
 import { ProgressGrid } from '../components/dashboard/ProgressGrid';
 import { StreakBar } from '../components/dashboard/StreakBar';
 import { CommunityCard } from '../components/dashboard/CommunityCard';
+import logoUrl from '../logo.png';
 
 import { ReflectionsList } from '../components/dashboard/ReflectionsList';
 import { CompleteBanner } from '../components/dashboard/CompleteBanner';
@@ -151,7 +152,6 @@ export function DashboardScreen() {
 
             {/* Footer */}
             <footer className="dash-footer">
-                <p>{t(language, 'footerText')}</p>
                 <button className="btn-reset" onClick={handleLogout}>
                     {t(language, 'logout')}
                 </button>

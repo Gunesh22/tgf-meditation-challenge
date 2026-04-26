@@ -23,10 +23,15 @@
 /* Primary */
 .btn--primary {
     padding: 16px 24px;
-    background: linear-gradient(135deg, var(--green-700), var(--green-900));
-    color: var(--green-50);
+    background: var(--gold-400);
+    color: var(--text-accent);
     border-radius: var(--radius-full);
-    box-shadow: 0 4px 20px rgba(46, 125, 50, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 214, 0, 0.3);
+}
+
+.btn--primary:hover {
+    box-shadow: 0 4px 20px rgba(255, 214, 0, 0.5);
+    transform: translateY(-1px);
 }
 
 /* Secondary */
@@ -54,10 +59,15 @@
 /* Confirm */
 .btn--confirm {
     padding: 15px;
-    background: linear-gradient(135deg, var(--green-700), var(--green-900));
-    color: var(--green-50);
+    background: var(--gold-400);
+    color: var(--text-accent);
     border-radius: var(--radius-full);
-    box-shadow: 0 4px 20px rgba(46, 125, 50, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 214, 0, 0.3);
+}
+
+.btn--confirm:hover {
+    box-shadow: 0 4px 20px rgba(255, 214, 0, 0.5);
+    transform: translateY(-1px);
 }
 
 /* Danger */

@@ -3,7 +3,7 @@
 }
 
 .complete-card {
-    background: linear-gradient(160deg, rgba(255, 202, 40, 0.08), rgba(46, 125, 50, 0.12));
+    background: rgba(255, 214, 0, 0.1);
     border: 1px solid rgba(255, 202, 40, 0.2);
     border-radius: var(--radius-xl);
     padding: 28px 24px;
@@ -34,7 +34,7 @@
     align-items: center;
     gap: 8px;
     padding: 12px 24px;
-    background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 179, 0, 0.1));
+    background: rgba(255, 214, 0, 0.2);
     border: 1px solid rgba(255, 202, 40, 0.3);
     color: var(--gold-400);
     font-size: 0.9rem;
@@ -51,7 +51,7 @@
 
 /* Failed banner styles */
 .failed-card {
-    background: linear-gradient(160deg, rgba(239, 83, 80, 0.05), rgba(0, 0, 0, 0.3));
+    background: rgba(239, 83, 80, 0.05);
     border: 1px solid rgba(239, 83, 80, 0.1);
 }
 
