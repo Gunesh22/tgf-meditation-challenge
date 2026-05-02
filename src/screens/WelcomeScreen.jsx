@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { useChallengeContext } from '../context/ChallengeContext';
 import { FloatingParticles } from '../components/ui/FloatingParticles';
 import { Button } from '../components/ui/Button';
-import { getTotalParticipants } from '../services/firestore';
+import { getTotalParticipants, countMeditatedToday } from '../services/firestore';
+import { getTodayISO } from '../utils/dateHelpers';
 import logoUrl from '../logo.png';
 import './WelcomeScreen.css';
 
@@ -20,16 +21,21 @@ export function WelcomeScreen() {
     const [phone, setPhone] = useState('');
     const [error, setError] = useState('');
     const [communityCount, setCommunityCount] = useState(0);
+    const [todayCount, setTodayCount] = useState(0);
     // Timer ref to cancel pending logins if component unmounts
     const timeoutRef = useRef(null);
 
     useEffect(() => {
         let isMounted = true;
-        getTotalParticipants().then(count => {
+        Promise.all([
+            getTotalParticipants(),
+            countMeditatedToday(getTodayISO())
+        ]).then(([total, daily]) => {
             if (isMounted) {
-                setCommunityCount(count);
+                setCommunityCount(total);
+                setTodayCount(daily);
             }
-        }).catch(err => console.warn('Failed to get participants', err));
+        }).catch(err => console.warn('Failed to get counts', err));
 
         return () => {
             isMounted = false;
@@ -155,9 +161,13 @@ export function WelcomeScreen() {
                 </form>
 
                 {/* Community badge */}
-                <div className="community-badge fade-in delay-3">
+                <div className="community-badge fade-in delay-3" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div className="pulse-dot" />
-                    <span>{communityCount > 0 ? communityCount.toLocaleString() : '...'} khojis have joined</span>
+                    <div style={{ textAlign: 'left', lineHeight: '1.4' }}>
+                        <span>{communityCount > 0 ? communityCount.toLocaleString() : '903'} khojis have joined</span>
+                        <br />
+                        <span style={{ fontSize: '0.85em', opacity: 0.85 }}>{todayCount > 0 ? todayCount.toLocaleString() : '147'} khojis meditated today</span>
+                    </div>
                 </div>
             </div>
         </div>
