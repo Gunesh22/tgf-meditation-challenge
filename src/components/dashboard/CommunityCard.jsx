@@ -31,17 +31,11 @@ export function CommunityCard() {
             }
         }
 
-        // Initial fetch forcing refresh to bypass memory cache on SPA navigation
-        fetchCounts(true);
-
-        // Fetch every 15 seconds, forcing cache bypass for real-time updates
-        const intervalId = setInterval(() => {
-            fetchCounts(true);
-        }, 15000);
+        // Initial fetch (uses 5-minute memory cache to save quota on rapid navigation)
+        fetchCounts(false);
 
         return () => { 
             cancelled = true; 
-            clearInterval(intervalId);
         };
     }, []);
 
