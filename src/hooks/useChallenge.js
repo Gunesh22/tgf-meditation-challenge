@@ -222,15 +222,15 @@ export function useChallenge() {
     const completedCount = useMemo(() => activeData ? Object.keys(activeData.completedDays || {}).length : 0, [activeData]);
     const isChallengeComplete = completedCount >= totalDays;
 
-    // Grace period: allow up to 2 days after the challenge ends so users
+    // Grace period: allow up to 3 days after the challenge ends so users
     // who missed the last day(s) can still catch up before being marked "failed"
-    const GRACE_PERIOD_DAYS = 2;
+    const GRACE_PERIOD_DAYS = 3;
     const isChallengeFailed = rawCurrentDay > (totalDays + GRACE_PERIOD_DAYS) && !isChallengeComplete;
 
     // --- Check if a day is allowed to be completed ---
-    // Only current day and up to 2 past days can be marked. Future days are blocked.
+    // Only current day and up to 3 past days can be marked. Future days are blocked.
     // During grace period, days up to totalDays remain completable.
-    const MAX_PAST_DAYS_ALLOWED = 2;
+    const MAX_PAST_DAYS_ALLOWED = 3;
 
     const isDayAllowed = useCallback((dayNum) => {
         if (!activeData) return false;
