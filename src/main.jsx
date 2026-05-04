@@ -1,4 +1,4 @@
-// ===== Entry Point =====
+// ===== Entry Point (Re-deployed stable version) =====
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
