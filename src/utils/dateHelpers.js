@@ -71,3 +71,17 @@ export function formatDate(date) {
         day: 'numeric',
     });
 }
+
+/**
+ * Returns a human-readable label for a specific day in the challenge.
+ * For the 11-day intro cohort, maps Day 1 to May 2, Day 2 to May 3, etc.
+ * Otherwise falls back to "Day X".
+ */
+export function getDayLabel(dayNum, challengeId = '11_day_intro') {
+    if (challengeId === '11_day_intro') {
+        const date = new Date('2026-05-02T00:00:00');
+        date.setDate(date.getDate() + (dayNum - 1));
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }); // e.g., "May 2"
+    }
+    return `Day ${dayNum}`;
+}

@@ -206,10 +206,16 @@ export function useChallenge() {
     const activeChallengeDef = useMemo(() => availableChallenges.find(c => c.id === state.activeChallengeId), [state.activeChallengeId, availableChallenges]);
     const activeData = state.challenges && state.activeChallengeId ? state.challenges[state.activeChallengeId] : null;
 
+    const effectiveStartDate = useMemo(() => {
+        if (!activeData) return null;
+        if (state.activeChallengeId === '11_day_intro') return '2026-05-02';
+        return activeData.startDate;
+    }, [activeData, state.activeChallengeId]);
+
     const totalDays = activeChallengeDef ? (Number(activeChallengeDef.durationDays) || Number(activeChallengeDef.totalDays) || 11) : 11;
 
     // Raw current day (can exceed totalDays if the user is past the end)
-    const rawCurrentDay = useMemo(() => activeData ? getCurrentDay(activeData.startDate) : 1, [activeData]);
+    const rawCurrentDay = useMemo(() => effectiveStartDate ? getCurrentDay(effectiveStartDate) : 1, [effectiveStartDate]);
     // Clamped for UI display (never shows > totalDays)
     const clampedCurrentDay = Math.min(rawCurrentDay, totalDays);
 
@@ -245,7 +251,7 @@ export function useChallenge() {
         // Enforce: only current day ± 2 past days allowed
         if (!isDayAllowed(dayNum)) return;
 
-        const dateForDay = getDateForDay(activeData.startDate, dayNum);
+        const dateForDay = getDateForDay(effectiveStartDate, dayNum);
         if (!dateForDay) return;
 
         const challengeId = state.activeChallengeId;
@@ -277,7 +283,7 @@ export function useChallenge() {
                 enqueueSync('completeDay', [userIdentifier, challengeId, dateForDay, feeling, thought]);
             });
         }
-    }, [state, activeData, persist, isDayAllowed]);
+    }, [state, activeData, effectiveStartDate, persist, isDayAllowed]);
 
     // --- Reset ---
     const resetChallenge = useCallback(() => {
@@ -288,10 +294,10 @@ export function useChallenge() {
 
     // --- Check day ---
     const isDayCompleted = useCallback((dayNum) => {
-        if (!activeData) return false;
-        const dateForDay = getDateForDay(activeData.startDate, dayNum);
+        if (!activeData || !effectiveStartDate) return false;
+        const dateForDay = getDateForDay(effectiveStartDate, dayNum);
         return dateForDay ? !!(activeData.completedDays && activeData.completedDays[dateForDay]) : false;
-    }, [activeData]);
+    }, [activeData, effectiveStartDate]);
 
     return {
         state,

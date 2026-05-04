@@ -8,12 +8,13 @@ import { Button } from '../ui/Button';
 import { useChallengeContext } from '../../context/ChallengeContext';
 import { FEELINGS, WISDOMS } from '../../constants';
 import { t } from '../../utils/translations';
+import { getDayLabel } from '../../utils/dateHelpers';
 import './ReflectionModal.css';
 
 const STEPS = { CONFIRM: 'confirm', REFLECT: 'reflect', COMPLETE: 'complete' };
 
 export function ReflectionModal({ isOpen, onClose, dayNum, onComplete }) {
-    const { completeDay, language } = useChallengeContext();
+    const { state, completeDay, language } = useChallengeContext();
     const [step, setStep] = useState(STEPS.CONFIRM);
     const [feeling, setFeeling] = useState('');
     const [thought, setThought] = useState('');
@@ -46,6 +47,8 @@ export function ReflectionModal({ isOpen, onClose, dayNum, onComplete }) {
 
     const wisdom = WISDOMS[Math.min((dayNum || 1) - 1, WISDOMS.length - 1)];
 
+    const dayLabel = language === 'en' ? getDayLabel(dayNum, state?.activeChallengeId) : `${t(language, 'day')} ${dayNum}`;
+
     return (
         <Modal isOpen={isOpen} onClose={handleClose} className="reflection-modal">
             <button className="modal-close" onClick={handleClose}>&times;</button>
@@ -54,7 +57,7 @@ export function ReflectionModal({ isOpen, onClose, dayNum, onComplete }) {
             {step === STEPS.CONFIRM && (
                 <div className="modal-step">
                     <div className="modal-icon">🌿</div>
-                    <h3>{t(language, 'reflectConfirmTitle', { day: dayNum })}</h3>
+                    <h3>{t(language, 'reflectConfirmTitle', { day: dayLabel })}</h3>
                     <p>{t(language, 'reflectConfirmSub')}</p>
                     <div className="confirm-buttons">
                         <Button variant="confirm" onClick={handleConfirmYes}>
@@ -116,7 +119,7 @@ export function ReflectionModal({ isOpen, onClose, dayNum, onComplete }) {
                     </div>
                     <div className="modal-icon">🌿</div>
                     <h3>{t(language, 'reflectCompletedTitle')}</h3>
-                    <p className="completion-day">{t(language, 'reflectDayCompleted', { day: dayNum })}</p>
+                    <p className="completion-day">{t(language, 'reflectDayCompleted', { day: dayLabel })}</p>
                     <p className="completion-wisdom">{wisdom}</p>
                     <Button variant="primary" onClick={handleDone}>
                         {t(language, 'reflectContinueBtn')}

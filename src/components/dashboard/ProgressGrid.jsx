@@ -3,10 +3,11 @@
 
 import { useChallengeContext } from '../../context/ChallengeContext';
 import { t } from '../../utils/translations';
+import { getDayLabel } from '../../utils/dateHelpers';
 import './ProgressGrid.css';
 
 export function ProgressGrid({ selectedDay, onDaySelect, isDayAllowed }) {
-    const { completedCount, isDayCompleted, language, totalDays } = useChallengeContext();
+    const { state, completedCount, isDayCompleted, language, totalDays } = useChallengeContext();
 
     const days = Array.from({ length: totalDays }, (_, i) => i + 1);
 
@@ -22,6 +23,8 @@ export function ProgressGrid({ selectedDay, onDaySelect, isDayAllowed }) {
                     const completed = isDayCompleted(d);
                     const isSelected = d === selectedDay;
                     const allowed = isDayAllowed ? isDayAllowed(d) : true;
+                    
+                    const label = language === 'en' ? getDayLabel(d, state?.activeChallengeId) : `${t(language, 'day')} ${d}`;
 
                     let className = 'progress-day';
                     if (completed) className += ' progress-day--completed';
@@ -34,9 +37,9 @@ export function ProgressGrid({ selectedDay, onDaySelect, isDayAllowed }) {
                             className={className}
                             onClick={() => onDaySelect(d)}
                             type="button"
-                            aria-label={isSelected ? t(language, 'daySelected', { day: d }) : (completed ? t(language, 'dayCompleted', { day: d }) : t(language, 'day', { day: d }))}
+                            aria-label={isSelected ? t(language, 'daySelected', { day: label }) : (completed ? t(language, 'dayCompleted', { day: label }) : t(language, 'day', { day: d }))}
                         >
-                            <span className="progress-day__num">{t(language, 'day')} {d}</span>
+                            <span className="progress-day__num">{label}</span>
                             <span className="progress-day__icon">{completed ? '✔' : (allowed ? '○' : '🔒')}</span>
                         </button>
                     );

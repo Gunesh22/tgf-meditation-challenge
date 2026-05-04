@@ -17,10 +17,10 @@ export const translations = {
         challengeFailedHeading: "Challenge Ended",
         challengeFailedSub: "The challenge period has passed, but your journey continues.",
         challengeFailedBtn: "Try Again Next Time",
-        dayCompleteHeading: "Day {day} — Practice complete ✨",
+        dayCompleteHeading: "{day} — Practice complete ✨",
         dayCompleteSub: "This day is done. Select another day or rest.",
         alreadyCompletedBtn: "Already Completed",
-        dayReadyHeading: "Day {day} — Ready to meditate",
+        dayReadyHeading: "{day} — Ready to meditate",
         readySub: "Take a moment. Close your eyes. Begin.",
         iMeditatedBtn: "I Meditated Today",
         // CommunityCard
@@ -30,8 +30,8 @@ export const translations = {
         // ProgressGrid
         yourJourney: "Your Journey",
         day: "Day",
-        dayCompleted: "Day {day} - Completed",
-        daySelected: "Day {day} - Selected",
+        dayCompleted: "{day} - Completed",
+        daySelected: "{day} - Selected",
         // StreakBar
         currentStreak: "Current Streak:",
         days: "Days",
@@ -54,7 +54,7 @@ export const translations = {
         feeling_difficult: "Difficult but meaningful",
 
         // Reflections Modal
-        reflectConfirmTitle: "Did you complete Day {day}'s meditation?",
+        reflectConfirmTitle: "Did you complete {day}'s meditation?",
         reflectConfirmSub: "Be honest with yourself. Every moment of silence counts.",
         reflectConfirmYes: "Yes, I did",
         reflectConfirmNotYet: "Not yet",
@@ -64,7 +64,7 @@ export const translations = {
         reflectThoughtPlaceholder: "What came to mind during your practice...",
         reflectSubmitBtn: "Submit",
         reflectCompletedTitle: "Beautiful.",
-        reflectDayCompleted: "Day {day} completed.",
+        reflectDayCompleted: "{day} completed.",
         reflectContinueBtn: "Continue",
 
         // Already Done Modal
@@ -105,10 +105,10 @@ export const translations = {
         challengeFailedHeading: "चुनौती समाप्त",
         challengeFailedSub: "समय सीमा समाप्त हो गई है, लेकिन आपकी यात्रा जारी है।",
         challengeFailedBtn: "अगली बार फिर प्रयास करें",
-        dayCompleteHeading: "दिन {day} — अभ्यास पूरा हुआ ✨",
+        dayCompleteHeading: "{day} — अभ्यास पूरा हुआ ✨",
         dayCompleteSub: "आज का दिन पूरा हुआ। अन्य दिन चुनें या आराम करें।",
         alreadyCompletedBtn: "पहले ही पूरा हो चुका है",
-        dayReadyHeading: "दिन {day} — ध्यान के लिए तैयार",
+        dayReadyHeading: "{day} — ध्यान के लिए तैयार",
         readySub: "एक पल लें। अपनी आँखें बंद करें। शुरू करें।",
         iMeditatedBtn: "मैंने आज ध्यान किया",
         // CommunityCard
@@ -118,8 +118,8 @@ export const translations = {
         // ProgressGrid
         yourJourney: "आपकी यात्रा",
         day: "दिन",
-        dayCompleted: "दिन {day} - पूरा हुआ",
-        daySelected: "दिन {day} - चयनित",
+        dayCompleted: "{day} - पूरा हुआ",
+        daySelected: "{day} - चयनित",
         // StreakBar
         currentStreak: "निरंतरता:",
         days: "दिन",
@@ -142,7 +142,7 @@ export const translations = {
         feeling_difficult: "कठिन लेकिन अर्थपूर्ण",
 
         // Reflections Modal
-        reflectConfirmTitle: "क्या आपने दिन {day} का ध्यान पूरा किया?",
+        reflectConfirmTitle: "क्या आपने {day} का ध्यान पूरा किया?",
         reflectConfirmSub: "स्वयं के प्रति ईमानदार रहें। मौन का हर पल मायने रखता है।",
         reflectConfirmYes: "हाँ, मैंने किया",
         reflectConfirmNotYet: "अभी नहीं",
@@ -152,7 +152,7 @@ export const translations = {
         reflectThoughtPlaceholder: "अभ्यास के दौरान मन में क्या आया...",
         reflectSubmitBtn: "जमा करें",
         reflectCompletedTitle: "सुंदर।",
-        reflectDayCompleted: "दिन {day} पूरा हुआ।",
+        reflectDayCompleted: "{day} पूरा हुआ।",
         reflectContinueBtn: "जारी रखें",
 
         // Already Done Modal

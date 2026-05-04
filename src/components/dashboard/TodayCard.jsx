@@ -3,10 +3,11 @@
 
 import { useChallengeContext } from '../../context/ChallengeContext';
 import { t } from '../../utils/translations';
+import { getDayLabel } from '../../utils/dateHelpers';
 import './TodayCard.css';
 
 export function TodayCard({ selectedDay, onMeditateClick }) {
-    const { isDayCompleted, isChallengeComplete, isChallengeFailed, language, adminSettings } = useChallengeContext();
+    const { state, isDayCompleted, isChallengeComplete, isChallengeFailed, language, adminSettings } = useChallengeContext();
 
     const dayCompleted = isDayCompleted(selectedDay);
 
@@ -16,6 +17,8 @@ export function TodayCard({ selectedDay, onMeditateClick }) {
     const wisdom = language === 'hi'
         ? (adminSettings?.dailyWisdomHindi || adminSettings?.dailyWisdom)
         : adminSettings?.dailyWisdom;
+
+    const dayLabel = language === 'en' ? getDayLabel(selectedDay, state?.activeChallengeId) : `${t(language, 'day')} ${selectedDay}`;
 
     if (isChallengeComplete) {
         heading = t(language, 'challengeCompleteHeading');
@@ -30,13 +33,13 @@ export function TodayCard({ selectedDay, onMeditateClick }) {
         btnIcon = "🍂";
         btnClass = "btn-meditate completed";
     } else if (dayCompleted) {
-        heading = t(language, 'dayCompleteHeading', { day: selectedDay });
+        heading = t(language, 'dayCompleteHeading', { day: dayLabel });
         subtext = wisdom || t(language, 'dayCompleteSub');
         btnText = t(language, 'alreadyCompletedBtn');
         btnIcon = "✓";
         btnClass = "btn-meditate completed";
     } else {
-        heading = t(language, 'dayReadyHeading', { day: selectedDay });
+        heading = t(language, 'dayReadyHeading', { day: dayLabel });
         subtext = wisdom || t(language, 'readySub');
         btnText = t(language, 'iMeditatedBtn');
         btnIcon = "✦";
